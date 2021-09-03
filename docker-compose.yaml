@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  
+  tasks-apis:
+    image: tasks-dev-env/tasks-api-dev:latest
+  #  container_name: tasks-apis
+    tty: true
+    environment:
+      - APP_RUN=true
+    volumes:
+      - ./tasks-api:/app:z
+    command:
+      - /entrypoint.sh
+    ports:
+      - "4020:4020"
+    networks:
+      - tasks-dev-env-network
+
+  db2:
+    image: mysql:5.7
+    container_name: container-banco
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=""
+  #  restart: always
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - 33061:3306
+    environment:
+      MYSQL_DATABASE: tasks
+      MYSQL_ROOT_PASSWORD: felipe
+    networks:
+      - tasks-dev-env-network
+    
+#Docker Networks
+networks:
+  tasks-dev-env-network:
+    driver: bridge

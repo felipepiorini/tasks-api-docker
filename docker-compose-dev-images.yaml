@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+ 
+  tasks-img-api:
+    build:
+      context: ./Dockerfiles
+      dockerfile: tasks-img-api/Dockerfile
+    image: tasks-dev-env/tasks-api-dev:latest
